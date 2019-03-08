@@ -1,0 +1,10 @@
+logging:
+  config: classpath:logback-spring.xml
+  # Gets exposed as $LOG_FILE
+  file: my_app
+  # Gets exposed as $LOG_PATH
+  path: ./src/main/resources/log-files-path/logath/log
+
+
+paths:
+  sendparams: /send-params

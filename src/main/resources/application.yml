@@ -7,4 +7,4 @@ logging:
 
 
 paths:
-  sendparams: /send-params
+    sendparams: /send-params

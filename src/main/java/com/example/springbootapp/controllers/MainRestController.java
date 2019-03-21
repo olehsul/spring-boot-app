@@ -10,12 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
-import java.util.stream.Collectors;
+import java.net.URISyntaxException;
 
 @RestController
 @RequestMapping("/api")
@@ -37,26 +32,17 @@ public class MainRestController {
     @Autowired
     private FileStorageService fileStorageService;
 
-    @PostMapping("/uploadFile")
-    public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
+    @PostMapping("/upload-file")
+    public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) throws IOException, URISyntaxException {
+
+        System.out.println("-------------inside uploadFile---------------");
         String fileName = fileStorageService.storeFile(file);
 
-        Path path = Paths.get(fileName);
-        Scanner scanner = new Scanner(path);
-        System.out.println("Read text file using Scanner");
-
-        while(scanner.hasNextLine()){
-            String line = scanner.nextLine();
-            System.out.println(line);
-
-            log.info(line);
-        }
-        scanner.close();
-
-        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+    String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/downloadFile/")
                 .path(fileName)
                 .toUriString();
+
 
         return new UploadFileResponse(fileName, fileDownloadUri,
                 file.getContentType(), file.getSize());

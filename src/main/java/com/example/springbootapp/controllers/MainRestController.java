@@ -9,8 +9,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URISyntaxException;
+import java.net.URL;
 
 @RestController
 @RequestMapping("/api")
@@ -47,4 +51,35 @@ public class MainRestController {
         return new UploadFileResponse(fileName, fileDownloadUri,
                 file.getContentType(), file.getSize());
     }
+
+    @GetMapping("/")
+    public void  callSmth() throws IOException {
+        MyGETRequest();
+    }
+
+
+    private static void MyGETRequest() throws IOException {
+        URL urlForGetRequest = new URL("https://httpbin.org/get");
+        String readLine = null;
+        HttpURLConnection conection = (HttpURLConnection) urlForGetRequest.openConnection();
+        conection.setRequestMethod("GET");
+//        conection.setRequestProperty("userId", "a1bcdef"); // set userId its a sample here
+        int responseCode = conection.getResponseCode();
+        if (responseCode == HttpURLConnection.HTTP_OK) {
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(conection.getInputStream()));
+            StringBuilder response = new StringBuilder();
+            while ((readLine = in.readLine()) != null) {
+                response.append(readLine);
+            } in .close();
+            // print result
+            System.out.println("JSON String Result " + response.toString());
+            //GetAndPost.POSTRequest(response.toString());
+        } else {
+            System.out.println("GET NOT WORKED");
+        }
+    }
+
+
+
 }

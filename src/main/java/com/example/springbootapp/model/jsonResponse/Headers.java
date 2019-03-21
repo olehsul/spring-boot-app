@@ -24,7 +24,7 @@ public class Headers {
     @JsonProperty("User-Agent")
     private String userAgent;
     @JsonIgnore
-    private Map<String, Object> additionalProperties = new HashMap<>();
+    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     @JsonProperty("Accept")
     public String getAccept() {
@@ -66,4 +66,14 @@ public class Headers {
         this.additionalProperties.put(name, value);
     }
 
+
+    @Override
+    public String toString() {
+        return "Headers{" +
+                "accept='" + accept + '\'' +
+                ", host='" + host + '\'' +
+                ", userAgent='" + userAgent + '\'' +
+                ", additionalProperties=" + additionalProperties +
+                '}';
+    }
 }

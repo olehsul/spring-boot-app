@@ -79,4 +79,15 @@ public class Response {
         this.additionalProperties.put(name, value);
     }
 
+
+    @Override
+    public String toString() {
+        return "Response{" +
+                "args=" + args +
+                ", headers=" + headers +
+                ", origin='" + origin + '\'' +
+                ", url='" + url + '\'' +
+                ", additionalProperties=" + additionalProperties +
+                '}';
+    }
 }

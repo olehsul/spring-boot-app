@@ -23,4 +23,10 @@ public class Args {
         this.additionalProperties.put(name, value);
     }
 
+    @Override
+    public String toString() {
+        return "Args{" +
+                "additionalProperties=" + additionalProperties +
+                '}';
+    }
 }

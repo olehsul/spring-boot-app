@@ -1,7 +1,9 @@
 package com.example.springbootapp.controllers;
 
 import com.example.springbootapp.model.UploadFileResponse;
+import com.example.springbootapp.model.jsonResponse.Response;
 import com.example.springbootapp.services.FileStorageService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,7 +44,7 @@ public class MainRestController {
         System.out.println("-------------inside uploadFile---------------");
         String fileName = fileStorageService.storeFile(file);
 
-    String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/downloadFile/")
                 .path(fileName)
                 .toUriString();
@@ -52,34 +54,34 @@ public class MainRestController {
                 file.getContentType(), file.getSize());
     }
 
-    @GetMapping("/")
-    public void  callSmth() throws IOException {
-        MyGETRequest();
-    }
-
-
-    private static void MyGETRequest() throws IOException {
+    @GetMapping("/get-json")
+    public void getJson() throws IOException {
         URL urlForGetRequest = new URL("https://httpbin.org/get");
         String readLine = null;
-        HttpURLConnection conection = (HttpURLConnection) urlForGetRequest.openConnection();
-        conection.setRequestMethod("GET");
-//        conection.setRequestProperty("userId", "a1bcdef"); // set userId its a sample here
-        int responseCode = conection.getResponseCode();
+        HttpURLConnection connection = (HttpURLConnection) urlForGetRequest.openConnection();
+        connection.setRequestMethod("GET");
+
+        int responseCode = connection.getResponseCode();
+
         if (responseCode == HttpURLConnection.HTTP_OK) {
             BufferedReader in = new BufferedReader(
-                    new InputStreamReader(conection.getInputStream()));
+                    new InputStreamReader(connection.getInputStream()));
             StringBuilder response = new StringBuilder();
             while ((readLine = in.readLine()) != null) {
                 response.append(readLine);
-            } in .close();
-            // print result
-            System.out.println("JSON String Result " + response.toString());
+            }
+            in.close();
+
+            ObjectMapper mapper = new ObjectMapper();
+            Response responseEntity = mapper.readValue(response.toString(), Response.class);
+
+            System.out.println(responseEntity);
+
+//            System.out.println("JSON String Result " + response.toString());
             //GetAndPost.POSTRequest(response.toString());
         } else {
             System.out.println("GET NOT WORKED");
         }
     }
-
-
 
 }

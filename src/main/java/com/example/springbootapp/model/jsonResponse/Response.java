@@ -2,12 +2,11 @@ package com.example.springbootapp.model.jsonResponse;
 
 import java.util.HashMap;
 import java.util.Map;
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import lombok.Data;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -16,6 +15,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         "origin",
         "url"
 })
+@Data
 public class Response {
 
     @JsonProperty("args")
@@ -29,65 +29,5 @@ public class Response {
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<>();
 
-    @JsonProperty("args")
-    public Args getArgs() {
-        return args;
-    }
 
-    @JsonProperty("args")
-    public void setArgs(Args args) {
-        this.args = args;
-    }
-
-    @JsonProperty("headers")
-    public Headers getHeaders() {
-        return headers;
-    }
-
-    @JsonProperty("headers")
-    public void setHeaders(Headers headers) {
-        this.headers = headers;
-    }
-
-    @JsonProperty("origin")
-    public String getOrigin() {
-        return origin;
-    }
-
-    @JsonProperty("origin")
-    public void setOrigin(String origin) {
-        this.origin = origin;
-    }
-
-    @JsonProperty("url")
-    public String getUrl() {
-        return url;
-    }
-
-    @JsonProperty("url")
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    @JsonAnyGetter
-    public Map<String, Object> getAdditionalProperties() {
-        return this.additionalProperties;
-    }
-
-    @JsonAnySetter
-    public void setAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
-    }
-
-
-    @Override
-    public String toString() {
-        return "Response{" +
-                "args=" + args +
-                ", headers=" + headers +
-                ", origin='" + origin + '\'' +
-                ", url='" + url + '\'' +
-                ", additionalProperties=" + additionalProperties +
-                '}';
-    }
 }

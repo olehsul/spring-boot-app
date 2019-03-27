@@ -3,11 +3,12 @@ package com.example.springbootapp.model.xmlResponse;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+import lombok.Data;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
+@Data
 @JacksonXmlRootElement(localName = "slideshow")
 public class Slideshow {
     @JacksonXmlProperty(localName = "title", isAttribute = true)
@@ -20,67 +21,18 @@ public class Slideshow {
     private String dataLiveStyleExtension;
 
     @JacksonXmlElementWrapper(localName = "slide")
-    private List<Slide> slides;
+    private List<Slide> slides = new ArrayList<>();
 
     public Slideshow() {
     }
 
-    public String getTitle() {
-        return title;
-    }
 
-    public void setTitle(String title) {
+
+    public Slideshow(String title, String date, String author, String dataLiveStyleExtension, List<Slide> slides) {
         this.title = title;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
         this.date = date;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
         this.author = author;
-    }
-
-    public String getDataLivestyleExtension() {
-        return dataLiveStyleExtension;
-    }
-
-    public void setDataLivestyleExtension(String dataLivestyleExtension) {
-        this.dataLiveStyleExtension = dataLivestyleExtension;
-    }
-
-    public String getDataLiveStyleExtension() {
-        return dataLiveStyleExtension;
-    }
-
-    public void setDataLiveStyleExtension(String dataLiveStyleExtension) {
         this.dataLiveStyleExtension = dataLiveStyleExtension;
-    }
-
-    public List<Slide> getSlides() {
-        return slides;
-    }
-
-    public void setSlides(List<Slide> slides) {
         this.slides = slides;
-    }
-
-    @Override
-    public String toString() {
-        return "Slideshow{" +
-                "title='" + title + '\'' +
-                ", date='" + date + '\'' +
-                ", author='" + author + '\'' +
-                ", dataLiveStyleExtension='" + dataLiveStyleExtension + '\'' +
-                ", slides=" + slides +
-                '}';
     }
 }
